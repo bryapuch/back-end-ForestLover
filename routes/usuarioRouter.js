@@ -23,6 +23,6 @@ router.post('/',usuarioNew);
 router.put('/:id',usuarioChange);
 
 // DELETE
-router.delete('/:', usuarioDelete);
+router.delete('/:id', usuarioDelete);
 
 module.exports = router;
