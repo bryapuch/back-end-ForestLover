@@ -13,7 +13,8 @@ class Server {
         this.server = require('http').createServer(this.app);
 
         this.paths ={
-            usuario:    '/api/user'
+            usuario:    '/api/user',
+            publicacion:    '/api/publication'
         }
 
         // conectar la base de datos
@@ -22,6 +23,7 @@ class Server {
         this.middlewares();
         // Rutas de mi aplicacion
         this.routes(this.usuariosPath,require('../routes/usuarioRouter'));
+        this.routes(this.usuariosPath,require('../routes/publicationRoutes'));
     }
 
     async dbConnection(){
@@ -46,7 +48,8 @@ class Server {
 
     routes(){
         
-        this.app.use(this.paths.usuario, require('../routes/usuarioRouter') );
+        this.app.use(this.paths.usuario, require('../routes/usuarioRouter'), );
+        this.app.use(this.paths.usuario, require('../routes/publicationRoutes'), );
     }
 
     listen(){
