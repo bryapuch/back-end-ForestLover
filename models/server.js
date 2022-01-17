@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
+const { dbConnection } = require('../db/config');
+
 
 class Server {
 
@@ -13,15 +16,23 @@ class Server {
             usuario:    '/api/user'
         }
 
-
+        // conectar la base de datos
+        this.dbConnection();
         // Middlewares
         this.middlewares();
         // Rutas de mi aplicacion
         this.routes(this.usuariosPath,require('../routes/usuarioRouter'));
     }
 
+    async dbConnection(){
+
+        await dbConnection();
+    }
+
     middlewares() {
 
+
+        this.app.use(morgan('dev'));
         // CORS
         this.app.use( cors() );
         
@@ -29,6 +40,8 @@ class Server {
         this.app.use( express.json() );
         // Directorio publico
         this.app.use(express.static('public'))
+
+        this.app.use(express.urlencoded({ extended: true }));
     }
 
     routes(){
