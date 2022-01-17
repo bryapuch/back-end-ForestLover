@@ -1,8 +1,10 @@
-const { request, response } = require("express");
+const { request, response } = require('express');
+const bcryptjs = require('bcryptjs');
+
 
 const User = require('../models/User');
 
-const usuarioAll = (req=request, res = response) =>{
+const usuarioAll = async (req=request, res = response) =>{
 
     User.find(function(err,users){
         if(err){
@@ -15,7 +17,7 @@ const usuarioAll = (req=request, res = response) =>{
     });
 }
 
-const usuarioOne = (req=request, res = response) =>{
+const usuarioOne = async (req=request, res = response) =>{
 
     const idUsuario = req.params.id;
 
@@ -35,7 +37,7 @@ const usuarioOne = (req=request, res = response) =>{
     });
 }
 
-const usuarioChange = (req=request, res = response) =>{
+const usuarioChange = async (req=request, res = response) =>{
 
     const idUser = req.params.id;
 
@@ -46,28 +48,33 @@ const usuarioChange = (req=request, res = response) =>{
     res.status(204).send(user);
 }
 
-const usuarioNew = (req=request, res = response) =>{
+const usuarioNew = async (req=request, res = response) =>{
 
-    const newUser = new User({
-        userId : req.body.userId,
-        nickname : req.body.nickname,  
-        correo : req.body.correo,
-        password : req.body.password,  
-        prefeI : req.body.prefeId
-    });
+    
 
-    newUser.save(function(err,user){
-        if(err){
-            return res.status(500).json({
-                message: 'Error when create a new User',
-                error: err
-            });
-        }
-        return res.send(user);
+    const {nickname,correo,password} = req.body;
+    const usuario = new User({nickname,correo,password});
+
+    // Verificar si el correo existe
+    const existeEmail = await User.findOne({correo});
+
+    if(existeEmail){
+        return res.status(400).json({
+            message: 'El correo ya esta registrado'
+        });
+    }
+
+    // Encriptar la contraseña
+    const salt = bcryptjs.genSaltSync();
+    usuario.password = bcryptjs.hashSync( password, salt );
+    await usuario.save();
+
+    res.json({
+        usuario
     });
 }
 
-const usuarioDelete = (req=request, res = response) =>{
+const usuarioDelete = async (req=request, res = response) =>{
 
     const idUser = req.params.id;
 

@@ -12,7 +12,7 @@ const PublicationSchema = Schema({
         required: true
     },
     image:{
-        type: Image,
+        type: String,
         required:true
     },
     calificacion:{
@@ -29,4 +29,4 @@ const PublicationSchema = Schema({
     },
 });
 
-module.exports = model( 'Articulos', ArticuloSchema);
+module.exports = model( 'Publication', PublicationSchema);

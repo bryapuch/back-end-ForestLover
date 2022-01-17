@@ -2,7 +2,7 @@ const { request, response } = require("express");
 
 const Publication = require('../models/Publication');
 
-const publicationAll = (req=request, res = response) =>{
+const publicationAll = async (req=request, res = response) =>{
 
     Publication.find(function(err,publicaciones){
         if(err){
@@ -15,7 +15,7 @@ const publicationAll = (req=request, res = response) =>{
     });
 }
 
-const publicationOne = (req=request, res = response) =>{
+const publicationOne = async (req=request, res = response) =>{
 
     const idPublication = req.params.id;
 
@@ -35,7 +35,7 @@ const publicationOne = (req=request, res = response) =>{
     });
 }
 
-const publicationChange = (req=request, res = response) =>{
+const publicationChange = async (req=request, res = response) =>{
 
     const idPublication = req.params.id;
 
@@ -46,7 +46,7 @@ const publicationChange = (req=request, res = response) =>{
     res.status(204).send(publicaciones);
 }
 
-const publicationNew = (req=request, res = response) =>{
+const publicationNew = async (req=request, res = response) =>{
 
     const newPublication = new User({
         publicationId : req.body.publicationId,
@@ -68,7 +68,7 @@ const publicationNew = (req=request, res = response) =>{
     });
 }
 
-const publicationDelete = (req=request, res = response) =>{
+const publicationDelete = async (req=request, res = response) =>{
 
     const idPublication = req.params.id;
 

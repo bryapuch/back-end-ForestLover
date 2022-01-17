@@ -1,28 +1,28 @@
 const {Router} = require('express');
 
 const { 
-    publicacionAll,
-    publicacionOne,
-    publicacionChange,
-    publicacionNew,
-    publicacionDelete
+    publicationAll,
+    publicationOne,
+    publicationChange,
+    publicationNew,
+    publicationDelete
 } = require('../controllers/publicationController');
 
 const router = Router();
 
 // GET All
-router.get('/',publicacionAll);
+router.get('/', publicationAll );
 
 // GET One
-router.get('/:id',publicacionOne);
+router.get('/:id',publicationOne);
 
 // POST
-router.post('/',publicacionChange);
+router.post('/',publicationChange);
 
 // PUT
-router.put('/:id',publicacionNew);
+router.put('/:id',publicationNew);
 
 // DELETE
-router.delete('/:id', publicacionDelete);
+router.delete('/:id', publicationDelete);
 
 module.exports = router;

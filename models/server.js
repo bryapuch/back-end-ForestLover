@@ -10,10 +10,8 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
-        this.server = require('http').createServer(this.app);
-
         this.paths ={
-            usuario:    '/api/user',
+            usuario:        '/api/user',
             publicacion:    '/api/publication'
         }
 
@@ -21,9 +19,12 @@ class Server {
         this.dbConnection();
         // Middlewares
         this.middlewares();
-        // Rutas de mi aplicacion
-        this.routes(this.usuariosPath,require('../routes/usuarioRouter'));
-        this.routes(this.usuariosPath,require('../routes/publicationRoutes'));
+
+        // lectura y parseo del body
+        this.app.use(express.json());
+
+        // Rutas de mis aplicaciones
+        this.routes();
     }
 
     async dbConnection(){
@@ -33,28 +34,23 @@ class Server {
 
     middlewares() {
 
-
-        this.app.use(morgan('dev'));
         // CORS
-        this.app.use( cors() );
-        
+        this.app.use(cors());
         // lectura y parseo del body
-        this.app.use( express.json() );
+        this.app.use(express.json());
         // Directorio publico
         this.app.use(express.static('public'))
 
-        this.app.use(express.urlencoded({ extended: true }));
     }
 
     routes(){
-        
-        this.app.use(this.paths.usuario, require('../routes/usuarioRouter'), );
-        this.app.use(this.paths.usuario, require('../routes/publicationRoutes'), );
+        this.app.use(this.paths.usuario, require('../routes/usuarioRouter'));
+        this.app.use(this.paths.publicacion, require('../routes/publicationRoutes'));
     }
 
     listen(){
         this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en el puerto ',process.env.PORT);
+            console.log(`Servidor corriendo en el puerto ${this.port}`)
         })
     }
 }

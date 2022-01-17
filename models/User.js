@@ -3,10 +3,6 @@ const { Schema, model } = require('mongoose');
 
 
 const UserSchema = Schema({
-    userId:{
-        type: String,
-        required: true
-    },
     nickname:{
         type: String,
         required: [true, 'El nombre es obligatorio']
@@ -20,10 +16,20 @@ const UserSchema = Schema({
         type: String,
         required: [ true, 'La contraseña es obligatorio'],
     },
+    estado:{
+        type: Boolean,
+        default: true
+    },
     prefeId:{
         type: String,
-
+        default: ''
     },
 });
 
-module.exports = model( 'Articulos', ArticuloSchema);
+UserSchema.methods.toJSON = function(){
+    const {__v, password,_id, ...usuario} = this.toObject();
+    usuario.uid = _id;
+    return usuario;
+}
+
+module.exports = model( 'User', UserSchema);
