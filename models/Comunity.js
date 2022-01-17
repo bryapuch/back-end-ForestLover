@@ -3,25 +3,21 @@ const { Schema, model } = require('mongoose');
 
 
 const UserSchema = Schema({
-    userId:{
+    comunityId:{
         type: String,
         required: true
     },
-    nickname:{
+    nombre:{
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    correo:{
+    descripcion:{
         type: String,
-        required: [ true, 'El correo es obligatorio'],
-        unique: true
+        required: [ true, 'La descripcion es obligatoria'],
     },
-    password:{
-        type: String,
-        required: [ true, 'La contraseña es obligatorio'],
-    },
-    prefeId:{
-        type: String,
+    userIds:{
+        type: Array<String>,
+
     },
 });
 
