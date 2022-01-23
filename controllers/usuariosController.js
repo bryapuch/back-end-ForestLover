@@ -36,7 +36,7 @@ const usuarioOne = async (req=request, res = response) =>{
 
     const idUsuario = req.params.id;
 
-    User.findOne({idUsuario:_id}, function(err, user){
+    User.findOne({_id:idUsuario}, function(err, user){
 
         if(err){
             return res.status(500).json({
@@ -94,8 +94,13 @@ const usuarioDelete = async (req=request, res = response) =>{
 
     // Start - 1 form delete
     const { id } = req.params;
+
     const usuario = await User.findByIdAndUpdate( id, { estado: false } );
-    res.json(usuario);
+    const usuarioAutenticado = req.usuario;
+
+    
+
+    res.json({usuario, usuarioAutenticado});
     // End - 1 form delete
 
     // Start - 2 form delete

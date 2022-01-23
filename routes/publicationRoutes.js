@@ -17,10 +17,10 @@ router.get('/', publicationAll );
 router.get('/:id',publicationOne);
 
 // POST
-router.post('/',publicationChange);
+router.post('/',publicationNew);
 
 // PUT
-router.put('/:id',publicationNew);
+router.put('/:id',publicationChange);
 
 // DELETE
 router.delete('/:id', publicationDelete);

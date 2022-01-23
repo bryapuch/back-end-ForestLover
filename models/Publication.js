@@ -3,10 +3,6 @@ const { Schema, model } = require('mongoose');
 
 
 const PublicationSchema = Schema({
-    publicationId:{
-        type: String,
-        required: true
-    },
     userId:{
         type: String,
         required: true
@@ -19,7 +15,7 @@ const PublicationSchema = Schema({
         type: String,
         required: true
     },
-    etigueta:{
+    etiqueta:{
         type: String,
         required: true
     },
@@ -28,5 +24,11 @@ const PublicationSchema = Schema({
 
     },
 });
+
+PublicationSchema.methods.toJSON = function(){
+    const {__v,_id, ...publication} = this.toObject();
+    publication.uid = _id;
+    return publication
+}
 
 module.exports = model( 'Publication', PublicationSchema);

@@ -12,7 +12,8 @@ class Server {
 
         this.paths ={
             usuario:        '/api/user',
-            publicacion:    '/api/publication'
+            publicacion:    '/api/publication',
+            auth:           '/api/auth'
         }
 
         // conectar la base de datos
@@ -46,6 +47,7 @@ class Server {
     routes(){
         this.app.use(this.paths.usuario, require('../routes/usuarioRouter'));
         this.app.use(this.paths.publicacion, require('../routes/publicationRoutes'));
+        this.app.use(this.paths.auth,require('../routes/authRouter'))
     }
 
     listen(){

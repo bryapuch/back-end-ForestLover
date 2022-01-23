@@ -19,7 +19,7 @@ const publicationOne = async (req=request, res = response) =>{
 
     const idPublication = req.params.id;
 
-    Publication.findOne({idPublication:_id}, function(err, publicaciones){
+    Publication.findOne({_id:idPublication}, function(err, publicaciones){
 
         if(err){
             return res.status(500).json({
@@ -39,21 +39,22 @@ const publicationChange = async (req=request, res = response) =>{
 
     const idPublication = req.params.id;
 
-    let publications = await Publication.findOneAndUpdate({idPublication,_id},{
+    const {userId, ...resto} = req.body;
 
-        nickname: req.body.nickname
+    const publication = await Publication.findByIdAndUpdate(idPublication, resto);
+
+    res.json({
+        publication
     })
-    res.status(204).send(publicaciones);
 }
 
 const publicationNew = async (req=request, res = response) =>{
 
-    const newPublication = new User({
-        publicationId : req.body.publicationId,
+    const newPublication = new Publication({
         userId : req.body.userId,  
         image : req.body.image,
         calificacion : req.body.calificacion,  
-        etigueta : req.body.etigueta, 
+        etiqueta : req.body.etiqueta, 
         ubicationId : req.body.ubicationId
     });
 
@@ -80,7 +81,7 @@ const publicationDelete = async (req=request, res = response) =>{
             });
         }
 
-        return res.status(204).json({
+        return res.status(200).json({
             message: 'Publication delete ok'
         });
     })
