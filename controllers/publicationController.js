@@ -51,10 +51,11 @@ const publicationChange = async (req=request, res = response) =>{
 const publicationNew = async (req=request, res = response) =>{
 
     const newPublication = new Publication({
-        userId : req.body.userId,  
-        image : req.body.image,
-        calificacion : req.body.calificacion,  
-        etiqueta : req.body.etiqueta, 
+        username : req.body.username,
+        body : req.body.body,  
+        coverImage : req.body.coverImage,
+        likes : req.body.likes,  
+        comments : req.body.comments, 
         ubicationId : req.body.ubicationId
     });
 

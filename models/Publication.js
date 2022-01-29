@@ -3,21 +3,25 @@ const { Schema, model } = require('mongoose');
 
 
 const PublicationSchema = Schema({
-    userId:{
+    username:{
         type: String,
         required: true
     },
-    image:{
+    body:{
         type: String,
-        required:true
+        require: true
     },
-    calificacion:{
+    coverImage:{
         type: String,
-        required: true
+        default: ""
     },
-    etiqueta:{
-        type: String,
-        required: true
+    likes:{
+        type: Number,
+        default: 0
+    },
+    comments:{
+        type: Number,
+        default: 0
     },
     ubicationId:{
         type: String,

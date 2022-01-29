@@ -1,4 +1,7 @@
 const {Router} = require('express');
+const {validarjwt}=require('../middlewares/validar-jwt')
+const {uploadPostImage}=require('../middlewares/uploadPostImage')
+const {uploadPostCoverImage}=require('../controllers/uploadController')
 
 const { 
     publicationAll,
@@ -14,15 +17,16 @@ const router = Router();
 router.get('/', publicationAll );
 
 // GET One
-router.get('/:id',publicationOne);
+router.get('/:id',validarjwt,publicationOne);
 
 // POST
-router.post('/',publicationNew);
+router.post('/',validarjwt,publicationNew);
 
 // PUT
-router.put('/:id',publicationChange);
+router.put('/:id',validarjwt,publicationChange);
 
 // DELETE
-router.delete('/:id', publicationDelete);
+router.delete('/:id',validarjwt, publicationDelete);
+router.patch('/create-post/cover-image/:id',validarjwt,uploadPostImage.single('image'),uploadPostCoverImage)
 
 module.exports = router;
